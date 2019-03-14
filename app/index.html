@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="app" ng-controller="homeCtrl">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+	<title>STIX Editor</title>
+	<base href="/">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<script src="js/angular.js"></script>
+	<script src="bower_components/angular-aria/angular-aria.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="js/angular-sanitize.js"></script>
+	<script src="app.module.js"></script>
+	<script src="layout/home.module.js"></script>
+	<script src="shared/shared.module.js"></script>
+	<script src="shared/stix.service.js"></script>
+	<script src="shared/cybox.service.js"></script>
+	<script src="export/exports.module.js"></script>
+	<script src="export/exporttoxml.service.js"></script>
+	<script src="export/import.service.js"></script>
+	<script src="layout/home.js"></script>
+	<script src="layout/settings.js"></script>
+	<script src="shared/view.js"></script>
+	<script src="shared/bulk.js"></script>
+	<script src="shared/validation.js"></script>
+	<script src="observables/hash.js"></script>
+	<script src="ttps/tool.js"></script>
+	<script src="shared/collapsedemo.js"></script>
+	<script src="shared/datepicker.js"></script>
+	<script src="shared/reference.service.js"></script>
+	<script src="shared/utils.service.js"></script>
+	<script src="shared/guid.service.js"></script>
+	<script src="shared/tooltips.service.js"></script>
+	<script src="shared/filter.service.js"></script>
+	<script src="ttps/tool.service.js"></script>
+	<script src="package/package.module.js"></script>
+	<script src="package/package.service.js"></script>
+	<script src="package/stix_namespaces.service.js"></script>
+	<script src="stix_header/stix_header.module.js"></script>
+	<script src="stix_header/stix_header.service.js"></script>
+	<script src="stix_header/handling.js"></script>
+	<script src="stix_header/marking.service.js"></script>
+	<script src="stix_header/information_source.service.js"></script>
+	<script src="stix_header/references.service.js"></script>
+	<script src="stix_header/ciqidentity.service.js"></script>
+	<script src="indicators/indicators.module.js"></script>
+	<script src="indicators/indicator.js"></script>
+	<script src="indicators/indicators.service.js"></script>
+	<script src="indicators/indicator.service.js"></script>
+	<script src="observables/observables.module.js"></script>
+	<script src="observables/observable.js"></script>
+	<script src="observables/observables.service.js"></script>
+	<script src="observables/observable.service.js"></script>
+	<script src="observables/properties.service.js"></script>
+	<script src="observables/object.service.js"></script>
+	<script src="ttps/ttps.module.js"></script>
+	<script src="ttps/ttps.js"></script>
+	<script src="ttps/ttps.service.js"></script>
+	<script src="ttps/ttp.service.js"></script>
+	<script src="exploit_targets/exploit_targets.module.js"></script>
+	<script src="exploit_targets/exploit_targets.js"></script>
+	<script src="exploit_targets/exploit_targets.service.js"></script>
+	<script src="exploit_targets/exploit_target.service.js"></script>
+	<script src="courses_of_action/courses_of_action.module.js"></script>
+	<script src="courses_of_action/courses_of_action.js"></script>
+	<script src="courses_of_action/courses_of_action.service.js"></script>
+	<script src="courses_of_action/course_of_action.service.js"></script>
+
+ 	<script src="js/ui-bootstrap-tpls-2.5.0.js"></script>
+	<script src="js/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="js/flow.js"></script>
+	<script src="js/ng-flow.js"></script>
+	<script src="js/checklist-model.js"></script>
+
+	<!-- Angular Growl -->
+	<link href="css/angular-growl.css" rel="stylesheet">
+	<script src="js/angular-growl.js"></script>
+	
+	<!-- additional JS libraries -->
+	<script src="js/XMLWriter-1.0.0.js"></script>
+	<script src="js/FileSaver.js"></script>
+	<script src="js/xml2json.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link href="bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="bootstrap-3.3.7/docs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="dashboard.css" rel="stylesheet">
+  <script src="bootstrap-3.3.7/docs/assets/js/ie-emulation-modes-warning.js"></script>
+
+	</head>
+	<body flow-prevent-drop id='top'>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+			      <a class="navbar-brand" href="#" tabindex="1" title="STIX Editor">STIX Editor</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<!-- 
+					<ul class="nav navbar-nav navbar-right">
+						<li></li>
+					</ul>
+					-->
+			    </div>
+			</div>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-3 sidebar">
+					<stix-pane></stix-pane>
+				</div>
+			    <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 main">
+					<div ng-hide='busy' ui-view="main"></div>
+					<div growl></div>
+			    </div>
+			</div>
+		</div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap-3.3.7/docs/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="bootstrap-3.3.7/docs/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="bootstrap-3.3.7/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
+	</body>
+</html>

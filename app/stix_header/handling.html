@@ -1,0 +1,99 @@
+<div class="col-md-offset-1">
+	<div ng-controller="handlingCtrl" style="padding-bottom: 1em;">
+		<label for="{{value.name}}">
+			<a data-placement="left" data-toggle="tooltip">{{value.name}}</a>
+			<span ng-if="value.validation.required" class="label-required">*</span>
+		</label>
+		<div class="dropdown">
+			<span id="{{value.name}}_Dropdown" style="display:none">
+				{{value.parent}}: {{value.name}} 
+				list: Press Space, then Up Down and Spacebar to select {{value.name}}:
+				{{value.tooltip}} 
+			</span>
+			<a tabindex="20" 
+				id="{{value.name}}" 
+				title="{{value.tooltip}}" 
+				class="btn btn-default btn-sm" 
+				data-toggle="dropdown"
+				aria-label="{{value.parent}}: {{value.name}}: Press Spacebar, then Tab or Shift Plus Tab and Spacebar to add a new handling marking: wait for the screen reader prompt for the handling fields to load before proceeding: {{value.tooltip}}">
+				Add Handling Marking
+				<span class="caret"></span>
+			</a>
+			<ul id="{{value.name}}" class="dropdown-menu">
+				<li ng-repeat="(key,item) in types" ng-if="key!='MIS'">
+					<button class="btn btn-link btn-sm btn-block" style="cursor:pointer;" tabindex="20" ng-click="change(key,value);">{{key | uppercase}}</button>
+				</li>
+			</ul>
+		</div>
+		<div ng-if="tlperror" class="text-danger">Cannot use more than one TLP Marking.</div>
+		<table class="table" ng-show="value.children.length">
+			<tr><th>Handling</th><th>Fields</th></tr>
+			<tr ng-repeat="marking in value.children" ng-switch on="marking.marking_structure['xsi:type'].value">
+				<td>
+					<label for="removeTLPMarking">{{marking.marking_structure["xsi:type"].value}}</label>
+					<button id="removeTLPMarking" 
+							class="btn btn-primary btn-danger btn-sm" 
+							aria-label="Delete Handling Marking"
+							ng-click="reseTLPError();value.delmarking($index);"><i class="glyphicon glyphicon-trash"></i></button>
+				</td>
+				<td>
+					<div ng-switch-when="AIS:AISMarkingStructure">
+						<div ng-switch on="marking.marking_structure.hasOwnProperty('is_proprietary') || marking.marking_structure.hasOwnProperty('not_proprietary')">
+							<div ng-switch-when="true">
+								<div ng-show="marking.marking_structure.hasOwnProperty('not_proprietary')">
+									<div class="form-group">
+										<form class="form-inline">
+											<label for="notproprietaryconsent">NOT_PROPRIETARY:{{marking.marking_structure.not_proprietary.ais_consent.name}}</label>
+											<select id="notproprietaryconsent" class="btn-default btn-sm" ng-model="marking.marking_structure.not_proprietary.consent.value" ng-options="item.name for item in marking.marking_structure.not_proprietary.consent.vocab.list"></select>
+										</form>
+									</div>
+									<div class="form-group">
+										<form class="form-inline">
+											<label for="notproprietarytlp">NOT_PROPRIETARY:{{marking.marking_structure.not_proprietary.ais_color.name}}</label>
+											<select id="notproprietarytlp" class="btn-default btn-sm" ng-model="marking.marking_structure.not_proprietary.color.value" ng-options="item.name for item in marking.marking_structure.not_proprietary.color.vocab.list"></select>
+										</form>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.party_names"></draw-this>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.countries"></draw-this>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.administrative_areas"></draw-this>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.sectors"></draw-this>
+									</div>
+								</div>
+								<div ng-show="marking.marking_structure.hasOwnProperty('is_proprietary')">
+									<div class="form-group">
+										<form class="form-inline">
+											<label for="isproprietarytlp">IS_PROPRIETARY:{{marking.marking_structure.is_proprietary.ais_color.name}}</label>
+											<select id ="isproprietarytlp" class="btn-default btn-sm" ng-model="marking.marking_structure.is_proprietary.color.value" ng-options="item.name for item in marking.marking_structure.is_proprietary.color.vocab.list"></select>
+										</form>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.party_names"></draw-this>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.countries"></draw-this>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.administrative_areas"></draw-this>
+									</div>
+									<div class="form-group">
+										<draw-this value="marking.information_source.ciq.sectors"></draw-this>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-switch-default>
+						<pre>The "{{marking.marking_structure['xsi:type'].value}}" marking_structure xsi:type is not implemented yet.</pre>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

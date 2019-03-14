@@ -1,0 +1,10 @@
+<script type="text/ng-template" id="recursive-fill.html">
+	<general-form></general-form>
+	<div ng-repeat="value in value.children">
+		<div ng-if="true">
+			<div class="col-md-offset-1" ng-include=" 'recursive-fill.html' " ng-init="value = value">
+			</div>
+		</div>
+	</div>
+</script>
+<div ng-include="'recursive-fill.html'" ng-init="value = value"></div>

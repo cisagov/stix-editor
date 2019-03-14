@@ -1,0 +1,27 @@
+<div class="modal-header">
+	<h3 title="Bulk Entry">Bulk Entry</h3>
+</div>
+
+<div class='modal-body'>
+	<table class='table'>
+		<tr>
+			<th><label for="entries">Paste Content (one item per line)</label></th>
+		</tr>
+		<tr>
+			<td><textarea id="entries" style="width:100%" ng-model='view.value.placeholder'></textarea></td>
+		</tr>
+		<tr>
+			<th><label for="parsedentries">Parsed Content</label></th>
+		</tr>
+		<tr>
+			<td>
+				<ol id="parsedentries"><li ng-repeat="(key, value) in view.uniqueEntries(view.value.placeholder.split('\n'))">{{value}}</li></ol>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class='modal-footer'>
+	<button title="Process it" class="btn btn-primary" ng-click="ok(view.uniqueEntries(view.value.placeholder.split('\n')))">Process it!</button>
+	<button title="Cancel" class="btn" ng-click="cancel()">Cancel</button>
+</div>

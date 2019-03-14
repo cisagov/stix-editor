@@ -1,0 +1,206 @@
+<script type="text/ng-template" id="recursive-observable.html">
+	<form name="genForm" ng-controller="validationCtrl" class="bs-docs-example" ng-init="parent()">
+		<tooltip-label></tooltip-label>
+		<div ng-if="value.hasOwnProperty('vocab')" ng-switch on="value.vocab.multiple">
+
+			<div ng-switch-when=true>
+				<div>
+					<select 
+						class="btn btn-default btn-sm" 
+						tabindex="10" 
+						name="{{value.name}}" 
+						id="{{value.name}}" 
+						size="{{value.vocab.list.length}}" 
+						ng-model="value.items" 
+						ng-options="item.name for item in value.vocab.list" 
+						ng-required="value.validation.required" 
+						ng-class="{validation:value.hasOwnProperty('validation')}"
+						multiple></select>
+				</div>
+			</div>
+			
+			<!--
+				Field: INDICATOR Object NetworkConnectionObject Destination_Socket_Address.Port.Layer4_Protocol
+				Field: INDICATOR Object PortObject Layer4_Protocol
+				Field: INDICATOR Object SocketAddressObject Port.Layer4_Protocol
+				Field: INDICATOR Object WindowsRegistryKeyObject Hive
+			-->
+			<div ng-switch-default>
+				<span id="{{value.name}}_obsdeep_tooltip" style="display: none;">{{value.tooltip}}</span>
+				<select class="btn btn-default btn-sm" 
+						tabindex="10" 
+						name="{{value.name}}" 
+						id="{{value.name}}"
+						aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}"
+						ng-model="value.value" 
+						ng-focus="tooltip.focusTooltip(value.name, '_obsdeep', value.tooltip)"
+						ng-blur="tooltip.blurTooltip(value.name, '_obsdeep')"
+						ng-options="item.name for item in value.vocab.list"></select>
+			</div>
+			<!-- Field: Multiple Dropdown List Fields END -->
+
+		</div>
+
+		<div ng-if="value.hasOwnProperty('text') || (value.hasOwnProperty('value') && !value.hasOwnProperty('vocab'))" ng-switch on="value.date">
+			<div ng-switch-when="true">
+				<date-time></date-time>
+			</div>
+			<div ng-switch-default>
+				<div ng-if="value.hasOwnProperty('text')">
+					<div>
+						<div ng-switch on="value.hasOwnProperty('pattern')">
+							<!--
+								Field: INDICATOR Object FileObject Size_In_Bytes
+								Field: INDICATOR Object NetworkConnectionObject Destination_Socket_Address.IP_Address.Address_Value
+								Field: INDICATOR Object NetworkConnectionObject Destination_Socket_Address.Port.Port_Value
+								Field: INDICATOR Object PortObject Port_Value
+								Field: INDICATOR Object SocketAddressObject Port.Port_Value
+							-->
+							<div ng-switch-when="true">
+								<span id="{{value.name}}_obspattern_tooltip" style="display: none;">{{value.tooltip}}</span>
+								<p ng-show="guiForm.textarea.$invalid" class="text-danger">{{value.validationtip.toString()}}</p>
+								<textarea 
+									class="form-control" 
+									tabindex="10" 
+									name="textarea" 
+									id="{{value.name}}" 
+									aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}: {{value.validationtip}}"
+									rows="1" 
+									ng-model="value.text" 
+									style="width:100%" 
+									ng-pattern="value.pattern" 
+									ng-required="value.validation.required" 
+									ng-focus="tooltip.focusTooltip(value.name, '_obspattern', value.tooltip)"
+									ng-blur="tooltip.blurTooltip(value.name, '_obspattern')"
+									ng-class="{validation:value.hasOwnProperty('validation')}"></textarea>
+							</div>
+							<!-- Field: Multiple Pattern Error ValidationTip Text Fields END -->
+
+							<!--
+								Field: INDICATOR Object EmailMessageObject Header.Subject
+								Field: INDICATOR Object EmailMessageObject Header.Message_ID
+								Field: INDICATOR Object EmailMessageObject Header.X_Mailer
+								Field: INDICATOR Object EmailMessageObject Raw_Body
+								Field: INDICATOR Object FileObject File_Name
+								Field: INDICATOR Object FileObject File_Path
+								Field: INDICATOR Object FileObject File_Externsion
+								Field: INDICATOR Object HTTPSessionObjectObject HTTP_Request_Response.HTTP_Client_Request.HTTP_Request_Header.Parsed_Header.User_Agent
+								Field: INDICATOR Object LinkObject Value
+								Field: INDICATOR Object LinkObject URL_Label
+								Field: INDICATOR Object MutexObject Name
+								Field: INDICATOR Object URIObject Value
+								Field: INDICATOR Object WindowsRegistryKeyObject Key
+							-->
+							<div ng-switch-default>
+								<span id="{{value.name}}_obstext_tooltip" style="display: none;">{{value.tooltip}}</span>
+								<textarea 
+									class="form-control" 
+									tabindex="10" 
+									name="{{value.name}}" 
+									id="{{value.name}}" 
+									aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}"
+									rows="1" 
+									ng-model="value.text" 
+									style="width:100%" 
+									ng-required="value.validation.required" 
+									ng-focus="tooltip.focusTooltip(value.name, '_obstext', value.tooltip)"
+									ng-blur="tooltip.blurTooltip(value.name, '_obstext')"
+									ng-class="{validation:value.hasOwnProperty('validation')}"></textarea>
+							</div>
+							<!-- Field: Multiple Plain Text Fields END -->
+
+						</div>
+					</div>
+					<button ng-if="value.hasOwnProperty('add')" tabindex="10" ng-click="add(value.text)">add+</button>
+					<ul class="unstyled">
+						<li ng-repeat="item in value.items">{{item}}</li>
+					</ul>
+				</div>
+
+				<div ng-if="value.hasOwnProperty('value')">
+					<textarea tabindex="10" rows="1" ng-model="value.value" style="width:100%" ng-readonly="value.disabled || value.attributes[0].name == 'xsi:type' || value.name == 'xsi:type'"></textarea>
+					<button ng-if="value.hasOwnProperty('add')" tabindex="10" ng-click="add(value.text)">add+</button>
+					<ul class="unstyled">
+						<li ng-repeat="item in value.items">{{item}}</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		
+		<!--
+			Field: INDICATOR Object AddressObject Address_Value
+			Field: INDICATOR Object DomainNameObject Value
+			Field: INDICATOR Object EmailMessageObject Header.From.Address_Value
+			Field: INDICATOR Object EmailMessageObject Header.X_Originating_IP.Address_Value
+			Field: INDICATOR Object NetworkConnectionObject Destination_Socket_Address.IP_Address.Address_Value
+			Field: INDICATOR Object SocketAddressObject IP_Address.Address_Value
+		-->
+		<div ng-if="value.hasOwnProperty('placeholder')">
+			<form class="form-inline">
+				<span id="{{value.parent}}{{value.name}}_obsaddrval_tooltip" style="display: none;">{{value.tooltip}}</span>
+				<input type="text" 
+					class="input-sm" 
+					tabindex="10" 
+					id="{{value.name}}" 
+					title="{{value.name}}"
+					aria-label="{{value.parent}}: {{value.name}}: Text field with add button to support multiple entries: {{value.tooltip}}"
+					ng-focus="tooltip.focusTooltip(value.parent + value.name, '_obsaddrval', value.tooltip)"
+					ng-blur="tooltip.blurTooltip(value.parent + value.name, '_obsaddrval')"
+					ng-model="value.placeholder"/>
+				<button type="button" class="btn btn-sm" tabindex="10" title="add {{value.name}}" style="margin-left:10px; margin-right:10px;" ng-click="value.add()">add {{value.name}}</button>
+				<button ng-controller="bulkCtrl" type="button" class="btn btn-sm" tabindex="10" title="add multiple" ng-click="bulkEntry();">add multiple</button>
+			</form>
+			<div ng-repeat="item in value.items" style="margin-bottom:5px;margin-top:5px;">
+				<form class="form-inline">
+					<button class="btn btn-primary btn-danger btn-sm" tabindex="10" title="add {{value.name}}" ng-click="value.del($index)"><i class="glyphicon glyphicon-trash"></i></button>
+					<input type="text" class="form-control input-sm" tabindex="10" ng-model="item.name"/>
+				</form>
+			</div>
+		</div>
+		<!-- Field: Multiple Plain Text Fields END -->
+		
+		<div ng-if="value.hasOwnProperty('choice')">
+			<h3>Choose One</h3>
+			<div class="btn-group">
+				<ANY ng-repeat="(key,item) in value.choice" ng-switch on="item.hasOwnProperty('ref')" style="float:left">
+					<button ng-switch-when=true class="btn btn-primary" tabindex="10" ng-click="value.setIndex(key)" ng-model="radioModel2">{{item.object.name}}</button>
+					<button ng-switch-default class="btn btn-primary" tabindex="10" ng-click="value.setIndex(key)" ng-model="radioModel2">{{item.name}}</button>
+				</ANY>
+				<button class="btn btn-primary btn-danger" tabindex="10" ng-model="radioModel2" ng-click="value.setIndex('just a string')">Neither</button>
+			</div>
+			<div ng-if="value.chosen">
+				<pre>You chose: {{value.chosen.name}}</pre>
+			</div>
+		</div>
+	
+		<div ng-if="value.hasOwnProperty('children')"></div>
+	
+		<div ng-switch on="value.name">
+			<div ng-switch-when="Motivations">
+				<div class="col-md-offset-1">
+					<button class="btn" tabindex="10" ng-click="value.addMotivation();">add Motivation</button>
+					<div ng-repeat="motivation in value.items" style="border-bottom-width: 10px; clear:both;">
+						<div class="btn-toolbar">
+							<div class="btn-group">
+								<div class="input-group">
+									<button class="btn btn-primary btn-danger" tabindex="10" ng-click="value.delMotivation($index)"><i class="glyphicon glyphicon-trash"></i></button>
+									<span class="input-group-addon">{{motivation.value.name}}</span>
+									<select ng-model="motivation.value.value" tabindex="10" ng-options="item.name for item in motivation.value.vocab.list"></select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div ng-repeat="value in value.children">
+		<!-- Field: This section enables recursive parent/child fields to be displayed -->
+		<div ng-if="true">
+			<div class="col-md-offset-1" ng-include=" 'recursive-observable.html' " ng-init="value = value">
+			</div>
+		</div>
+	</div>
+</script>
+<div ng-include="'recursive-observable.html'" ng-init="value = value"></div>

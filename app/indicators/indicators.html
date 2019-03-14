@@ -1,0 +1,7 @@
+<div ng-controller='indicatorCtrl'>
+	<form name="guiForm">
+		<indicator></indicator>
+		<div style="clear:both"></div>
+		<button class="btn btn-primary" tabindex="10" title="Add {{indicator.name}} Object" ng-disabled="guiForm.$invalid" ng-click="addObject(indicator); delIndicator();" style="border-top-width: 1px; padding-top: 4px; margin-top: 10px; clear:both";>Add {{indicator.name}} Object</button>
+	</form>
+</div>

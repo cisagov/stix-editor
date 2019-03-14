@@ -1,0 +1,17 @@
+<span ng-if="!value.hasOwnProperty('name_for_ui')">
+	<label for="{{value.name}}">
+			<a data-placement="left" 
+			   data-toggle="tooltip" 
+			   title="{{value.tooltip}}">{{value.name}}</a> 
+		<span ng-if="value.validation.required" class="label-required">*</span>
+	</label>
+</span>
+<span ng-if="value.hasOwnProperty('name_for_ui')">
+	<label for="{{value.name_for_ui}}">
+		<a data-placement="left" 
+		   data-toggle="tooltip" 
+		   title="{{value.tooltip}}">{{value.name_for_ui}}</a> 
+		<span ng-if="value.validation.required" class="label-required">*</span>
+	</label>
+</span>
+	

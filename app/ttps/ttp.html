@@ -1,0 +1,46 @@
+<title-dir text="TTP - Tactics, Techniques, and Procedures"></title-dir>
+<div ng-repeat="value in ttp.children">
+	<div ng-switch on="value.name">
+		<div ng-switch-when="Behavior" style="clear:both">
+			<tooltip-label></tooltip-label>
+			<div ng-repeat="value in value.children" class="col-md-offset-1 clear">
+				<!-- <tooltip-label></tooltip-label> -->
+				<div ng-switch on="value.name" style="clear:both">
+					<div ng-switch-when="Attack_Patterns" style="clear:both">
+						<accordion-related
+							value='value'
+							total-array="value.children"
+							total-array-filter="[]"
+							add-modal= "openModal({self:value,child:value.attack_pattern(),addFuncName:'addAttackPattern',template:'general-all'})"
+							display='displayRef(displayItem)'
+							edit-modal="openModal(editObject)"
+							del-modal="value.delAttackPattern(childIndex)"
+							del-func-name='delAttackPattern'
+							template="simple"
+							template-modal='general-all'
+							></accordion-related>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div ng-switch-when="Related_Exploit_Targets">
+			<accordion-related
+				value='value'
+				total-array="stix.ets.children"
+				total-array-filter="[]"
+				add-modal= "openModal({self:value,child:stix.ets.childType(),stix:'ets'})"
+				display='displayRef(displayItem)'
+				edit-modal="openModal(editObject)"
+				del-modal="value.updateRef(childIndex)"
+				del-func-name='updateRef'
+				stix='ets'
+				template='stix'
+				></accordion-related>
+		</div>
+
+		<div ng-switch-default>
+			<recursive-fill></recursive-fill>
+		</div>
+	</div>
+</div>

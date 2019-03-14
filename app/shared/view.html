@@ -1,0 +1,36 @@
+<!-- VIEWING TEMPLATE -->
+
+<div>
+	<div class="well text-center">
+		<h4>You are editing {{objectType}} #{{childIndex + 1}}
+			<ANY ng-if="idIndex !== false">
+				<br/>With @id <br/>{{object.attributes[idIndex].value}} 
+				<div ng-init="currentObjectId = object.attributes[idIndex].value">
+				</div>
+			</ANY>
+		</h4>
+	</div>
+	<button class="btn btn-primary btn-lg btn-block btn-danger" tabindex="10" type="button" ng-click="del(childIndex);">DELETE</button></div>
+	
+	<div ng-switch on="objectType">
+		<div ng-switch-when="observables">
+			<observable></observable>
+		</div>
+		<div ng-switch-when="indicators">
+			<indicator></indicator>
+		</div>
+		<div ng-switch-when="coas">
+			<coa></coa>
+		</div>
+		<div ng-switch-when="tas">
+			<ta></ta>
+		</div>
+		<div ng-switch-when="ttps">
+			<ttp></ttp>
+		</div>
+		<div ng-switch-when="ets">
+			<et></et>
+		</div>
+		<div ng-switch-default>NO TEMPLATE FOR THIS ITEM</div>
+	</div>
+</div>

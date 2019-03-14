@@ -1,0 +1,60 @@
+<div class="panel panel-default" style="clear:both">
+
+	<span id="{{value.name}}_accordionSimple_tooltip" style="display: none;">
+		{{value.tooltip}}<br/>
+		When there are One or more {{value.name}} press Spacebar or Enter to toggle the display open and closed.
+	</span>
+	<span id="{{value.name}}_accordionSimpleNew_tooltip" style="display: none;">
+		{{value.tooltip}}<br/>
+		Press Shift+Enter to create new {{value.name}}.
+	</span>
+	<div class="panel-heading" 
+		tabindex="10" 
+		ng-controller="CollapseDemoCtrl" 
+		style="cursor:pointer;display:flex;"
+		ng-focus="tooltip.focusTooltip(value.name, '_accordionSimple', value.tooltip)" 
+		ng-blur="tooltip.blurTooltip(value.name, '_accordionSimple')"  
+		ng-click="toggle()">
+		<!--  Field: EXPLOIT TARGET Vulnerabilities Accordion -->
+		<!--  Field: TTPs Attack Pattern Accordion -->
+		<a class="accordion-toggle" 
+			style="width:100%;" 
+			data-parent="#accordion2" 
+			data-toggle="tooltip" 
+			title="{{value.tooltip}}" 
+			aria-label="{{value.parent}} {{value.name}} click to toggle {{value.name}} listing: {{value.tooltip}} current count {{value.children.length}}"
+			data-placement="left">
+			<span>{{value.name}}</span>
+			<span class="badge" style="background-color: #205493">{{value.children.length}}</span>
+			<button tabindex="10" 
+					class="btn btn-primary pull-right" 
+					title="New {{value.name}}" 
+					ng-focus="tooltip.focusTooltip(value.name, '_accordionSimpleNew', value.tooltip + ' press Shift+Enter to open the create a new ' + value.name)" 
+					ng-blur="tooltip.blurTooltip(value.name, '_accordionSimpleNew')"  
+					aria-label="New {{value.name}}: press Shift plus Enter and then wait for the screen reader prompt to open dialog window for the"
+					ng-click="addModal()">
+					New {{value.name}}
+			</button>
+		</a>
+	</div>
+	<div class="panel-collapse collapse">
+		<div ng-repeat="child in value.children">
+			<!-- Attack Pattern?!? -->
+			<button tabindex="10" 
+					class="btn btn-link btn-sm" 
+					ng-click="editModal({editObject:{edit:child, index:value.children.indexOf(child),parent:value,template:templateModal,delFunc:delFuncName}})"
+					aria-label="Edit {{value.name}} item with title of {{child.title.text.length > 0 ? child.title.text : 'No Title'}}"
+					ng-show="templateModal">Edit Attack Pattern</button>
+			<!-- Vulnerability?!? -->
+			<button tabindex="10" 
+					class="btn btn-link btn-sm" 
+					ng-click="editModal({editObject:{edit:child, index:value.children.indexOf(child),parent:value,delFunc:delFuncName}})"
+					aria-label="Edit {{value.name}} item with title of {{child.title.text.length > 0 ? child.title.text : 'No Title'}}"
+					ng-hide="templateModal">Edit Vulnerability</button>
+			<!-- Apparently Attack Pattern objects have a templateModal 
+				attribute that helps control the ng-click editModal() 
+				function. So we show/hide based on that attribute.       -->
+			<span style="font-size:12px;">Title:{{child.title.text.length > 0 ? child.title.text : "No Title"}}</span>
+		</div>
+	</div>
+</div>

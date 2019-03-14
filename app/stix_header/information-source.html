@@ -1,0 +1,14 @@
+<tooltip-label></tooltip-label>
+<div ng-repeat="value in value.children" ng-switch on="value.name" class="col-md-offset-1">
+	<general-form ></general-form>
+	<!-- stixCommon:Identity Section -->
+	<div ng-switch-when="Tools">
+		<tool class="offset1"></tool>
+	</div>
+	<div ng-switch-when="References">
+		<general-form ng-repeat="value in value.children.children"></general-form>
+	</div>
+	<div class="offset1" ng-switch-default>
+		<general-form ng-repeat="value in value.children"></general-form>
+	</div>
+</div>

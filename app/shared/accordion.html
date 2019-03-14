@@ -1,0 +1,28 @@
+<div class="panel panel-default" style="clear:both">
+	
+	<span id="{{value.name}}_accordion_tooltip" style="display: none;">{{value.tooltip}}</span>
+	<div class="panel-heading" 
+		tabindex="10" 
+		ng-focus="tooltip.focusTooltip(value.name, '_accordion', value.tooltip)" 
+		ng-blur="tooltip.blurTooltip(value.name, '_accordion')" 
+		ng-click="toggle()" 
+		style="cursor:pointer;" 
+		ng-controller="CollapseDemoCtrl">
+		<a class="accordion-toggle" data-parent="#accordion2" data-toggle="tooltip" title="{{value.tooltip}}" data-placement="left">
+			<span>{{value.name}}</span>
+			<span class="badge" style="background-color: #205493">{{value.children.length}} / {{(totalArray | observableObject:totalArrayFilter).length}}</span>
+		</a>
+		<span ng-show="{{(totalArray | observableObject:totalArrayFilter).indexOf(observable)}} >= 0" class="badge badge-important">this {{stix.observables.childType().name}} is not listed below</span>
+	</div>
+	<div class="panel-collapse collapse">
+		<div class="alert alert-warning" style="margin-bottom: 0px;">
+			<div ng-repeat="child in totalArray | observableObject:totalArrayFilter">
+				<div ng-show="observable != child">
+					<span><input type="checkbox" tabindex="10" checklist-model="value.list" checklist-value="child.object" ng-click="value.updateRef(child.object)"  ng-checked="value.list.indexOf(child.object.id.value) >= 0"></span>					
+					<button class='btn button-default  btn-xs' tabindex="10" style="cursor:pointer;" ng-click="editModal({editObject:{template:templateModal,edit:child.object.properties, index:totalArray.indexOf(child)}})">Edit</button>
+					<span>{{child.id.value}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,341 @@
+<!-- general form parser -->
+<script type="text/ng-template" id="general-form.html" style="clear:both">
+
+<form name="genForm" ng-controller="validationCtrl" class="bs-docs-example">
+	
+	<tooltip-label></tooltip-label>
+
+	<!-- Display vocab elements -->
+	<div ng-if ="value.hasOwnProperty('vocab')" ng-switch on="value.vocab.multiple" >
+
+		<!-- Field: INDICATOR Type -->
+		<div ng-switch-when=true >
+			<div>
+				<span id="{{value.name}}_generaltype_tooltip" style="display: none;">
+					{{value.tooltip}}<br/>
+					Press Shift+F8, then Up/Down and Spacebar to select more than one {{value.name}}
+				</span>
+				<span id="{{value.name}}_Multi" style="display:none">
+					{{value.parent}}: {{value.name}} 
+					list: Press Shift Plus F Eight, then Up Down and 
+					Spacebar to select more than one {{value.name}}:
+					{{value.tooltip}} 
+				</span>
+				<select 
+					class="btn-default btn-sm" 
+					tabindex="10" 
+					name="{{value.name}}" 
+					id="{{value.name}}" 
+					aria-describedby="{{value.name}}_Multi"
+					size="{{value.vocab.list.length}}" 
+					ng-model="value.items" 
+					ng-options="item.name for item in value.vocab.list" 
+					ng-focus="tooltip.focusTooltip(value.name, '_generaltype', value.tooltip)" 
+					ng-blur="tooltip.blurTooltip(value.name, '_generaltype')"
+					multiple 
+					ng-required="value.validation.required"></select>
+			</div>
+		</div>
+		<!-- Field: INDICATOR Type END -->
+
+		<!-- Field: INDICATOR Kill_Chain_Phases name -->
+		<div ng-switch-default>
+
+			<span id="{{value.name}}_kcp_tooltip" style="display: none;">{{value.tooltip}}</span>
+			<span id="{{value.name}}_List" style="display:none">
+				{{value.parent}}: {{value.name}}: {{value.tooltip}} 
+			</span>
+			<select 
+				class="btn-default btn-sm" 
+				tabindex="10" 
+				name="{{value.name}}" 
+				id="{{value.name}}" 
+				aria-labelledby="{{value.name}}_List" 
+				ng-model="value.value" 
+				ng-focus="tooltip.focusTooltip(value.name, '_kcp', value.tooltip)" 
+				ng-blur="tooltip.blurTooltip(value.name, '_kcp')"
+				ng-options="item.name for item in value.vocab.list"></select>
+		</div>
+		<!-- Field: INDICATOR Kill_Chain_Phases name END -->
+
+	</div>
+
+	<!-- This section was not there originally. It's an attempt to implement the Metadata section on the New Tool Modal -->
+	<!-- Display meta_value vocab elements -->
+	<div ng-if ="value.meta_value.hasOwnProperty('vocab')" ng-switch on="value.meta_value.vocab.multiple">
+		<div ng-switch-when=true>
+			<div>
+				<select 
+					class="btn btn-default btn-sm" 
+					size="{{value.meta_value.vocab.list.length}}" 
+					ng-model="value.meta_value.items" 
+					ng-options="item.name for item in value.meta_value.vocab.list" 
+					multiple 
+					ng-required="value.meta_value.validation.required" 
+					ng-class="{validation:value.meta_value.hasOwnProperty('validation')}"></select>
+			</div>
+		</div>
+		<div ng-switch-default>
+			<select 
+				class="btn btn-default btn-sm"  
+				ng-model="value.meta_value.value" 
+				ng-options="item.name for item in value.meta_value.vocab.list" ></select>
+		</div>
+	</div>
+
+	<div ng-if="value.hasOwnProperty('text') || (value.hasOwnProperty('value') && !value.hasOwnProperty('vocab'))" ng-switch on="value.date">
+		<!-- Display DateTime elements -->
+		<div ng-switch-when="true">
+			<date-time></date-time>
+		</div>
+		
+		<div ng-switch-default>
+			<div ng-if="value.hasOwnProperty('text')">
+				<div>
+					<div ng-switch on=value.hasOwnProperty('pattern')>
+
+						<!--
+							Field: EXPLOIT TARGETS Vulnerability CVE_ID
+							Field: EXPLOIT TARGETS Vulnerability OSVDB_ID
+						-->
+						<div ng-switch-when="true">
+							<span ng-show="genForm.textarea.$invalid" class="error">{{value.validationtip.toString()}}</span>
+							<span id="{{value.name}}_txpattern_tooltip" style="display: none;">{{value.tooltip}}</span>
+							<textarea 
+								class="form-control" 
+								tabindex="10" 
+								id="{{value.name}}"			
+								aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}: {{value.validationtip}}" 
+								name="textarea" 
+								rows="1" 
+								ng-model="value.text" style="width:100%" 
+								ng-pattern="value.pattern" 
+								ng-class="{validation:value.hasOwnProperty('validation')}"
+								ng-focus="tooltip.focusTooltip(value.name, '_txpattern', value.tooltip)"
+								ng-blur="tooltip.blurTooltip(value.name, '_txpattern')">
+							</textarea>
+						</div>
+						<!-- Field: Multiple Pattern Error ValidationTip Text Fields END -->
+
+						<div ng-switch-default>
+							<div ng-switch on=value.hasOwnProperty('autofocus')>
+								<!-- Field: EXPLOIT TARGETS Vulnerability Title -->
+								<div ng-switch-when="true">
+									<span id="{{value.name}}_txfirst_tooltip" style="display: none;">{{value.tooltip}}</span>
+									<textarea 
+										tabindex="10" 
+										id="{{value.name}}" 
+										name="{{value.name}}" 
+										aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}"
+										class="form-control" 
+										name="textarea" 
+										rows="1" 
+										ng-model="value.text" 
+										style="width:100%" 
+										ng-required="value.validation.required" 
+										ng-class="{validation:value.hasOwnProperty('validation')}"
+										ng-focus="tooltip.focusTooltip(value.name, '_txfirst', value.tooltip)"
+										ng-blur="tooltip.blurTooltip(value.name, '_txfirst')"
+										autofocus>
+									</textarea>
+								</div>
+								<!-- Field: EXPLOIT TARGETS Vulnerability Title END -->
+
+								<!--
+									Field: COURSE OF ACTION Title
+									Field: COURSE OF ACTION Description
+									Field: EXPLOIT TARGET Vulnerability Description
+									Field: TTP Attack Pattern Title
+									Field: TTP Attack Pattern Description
+									Field: INDICATOR Description
+								-->
+								<div ng-switch-default>
+									<span id="{{value.name}}_tx_tooltip" style="display: none;">{{value.tooltip}}</span>
+									<textarea 
+										tabindex="10" 
+										id="{{value.name}}" 
+										name="{{value.name}}" 
+										aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}"
+										class="form-control" 
+										name="textarea" 
+										rows="1" 
+										ng-model="value.text" 
+										style="width:100%" 
+										ng-required="value.validation.required" 
+										ng-class="{validation:value.hasOwnProperty('validation')}"
+										ng-focus="tooltip.focusTooltip(value.name, '_tx', value.tooltip)"
+										ng-blur="tooltip.blurTooltip(value.name, '_tx')">
+									</textarea>
+								</div>
+								<!-- Field: Multiple Plain Text Fields END -->
+
+							</div>	
+						</div>
+					</div>
+				</div>
+				
+				<button ng-if="value.hasOwnProperty('add')" ng-click="add(value.text)">add+</button>
+				<ul class="unstyled">
+					<li ng-repeat="item in value.items">{{item}}</li>
+				</ul>
+			</div>
+			<div ng-if="value.hasOwnProperty('value')">	
+				<div ng-switch on=value.hasOwnProperty('pattern')>
+					<div ng-switch-when="true">
+						<span ng-show="genForm.textarea.$invalid" class="error">{{value.validationtip.toString()}}</span>
+						<div ng-switch on=value.hasOwnProperty('autofocus')>
+							<div ng-switch-when="true">
+								<textarea 
+									class="form-control" 
+									tabindex="10" 
+									name="textarea" 
+									aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}: {{value.validationtip}}"
+									rows="1" 
+									ng-model="value.value" 
+									style="width:100%" 
+									ng-pattern="value.pattern" 
+									ng-readonly="value.disabled || value.attributes[0].name == 'xsi:type' || value.name == 'xsi:type'"
+									autofocus>
+								</textarea>
+							</div>
+
+							<!-- Field: TTPs Attack Pattern CAPEC_ID -->
+							<div ng-switch-default>
+								<span id="{{value.name}}_txpatfirst_tooltip" style="display: none;">{{value.tooltip}}</span>
+								<textarea 
+									class="form-control" 
+									tabindex="10" 
+									name="textarea" 
+									aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}: {{value.validationtip}}"
+									rows="1" 
+									ng-model="value.value" 
+									style="width:100%" 
+									ng-pattern="value.pattern" 
+									ng-readonly="value.disabled || value.attributes[0].name == 'xsi:type' || value.name == 'xsi:type'"
+									ng-focus="tooltip.focusTooltip(value.name, '_txpatfirst', value.tooltip)"
+									ng-blur="tooltip.blurTooltip(value.name, '_txpatfirst')"
+									autofocus>
+								</textarea>
+							</div>
+							<!-- Field: TTPs Attack Pattern CAPEC_ID END-->
+						</div>
+					</div>
+					<div ng-switch-default>
+						<textarea 
+							class="form-control" 
+							tabindex="10" 
+							name="textarea" 
+							rows="1" 
+							ng-model="value.value" 
+							style="width:100%" 
+							ng-readonly="value.disabled || value.attributes[0].name == 'xsi:type' || value.name == 'xsi:type'">
+						</textarea>
+					</div>
+				</div>
+				<button ng-if="value.hasOwnProperty('add')" ng-click="add(value.text)">add+</button>
+				<ul class="unstyled">
+					<li ng-repeat="item in value.items">{{item}}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- Display ITEM elements -->
+	<div ng-if="value.children[0].hasOwnProperty('placeholder')">
+		<!-- References:{{value}}<br/> -->
+		ITEMS
+		<div class="input-group">
+			<input type="text" ng-model="value.children[0].placeholder"/>
+			<button type="button" class="btn btn-sm" ng-click="value.children[0].add()">add {{value.children[0].name}}</button>
+		</div>
+
+		<ul class="unstyled">
+			<li ng-repeat="item in value.children[0].items">
+				<div class="btn-toolbar">
+					<div class="btn-group">
+					<div class="input-group">
+						<button class="btn btn-primary btn-danger" ng-click="value.children[0].del($index)"><i class="glyphicon glyphicon-trash"></i></button>
+						<input type="text" ng-model="item.name"/>
+					</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+	<!-- Display DELIMITED elements -->
+	<div ng-if="value.hasOwnProperty('placeholder')">
+		<!-- References:{{value}}<br/> -->
+		<form class="form-inline">
+			<input type="text" class="input-sm" ng-model="value.placeholder"/>
+			<button type="button" class="btn btn-sm" ng-click="value.add()">add {{value.name}}</button>
+			<button ng-controller="bulkCtrl" type="button" class="btn btn-sm" ng-click="bulkEntry();">add multiple</button>
+		</form>
+		<ul class="list-group">
+			<li class="list-group-item" ng-repeat="item in value.items">
+				<form class="form-inline">
+					<button class="btn btn-primary btn-danger btn-sm" ng-click="value.del($index)"><i class="glyphicon glyphicon-trash"></i></button>
+					<input type="text" class="input-sm" ng-model="item.name"/>
+				</form>
+			</li>
+		</ul>
+	</div>
+	
+	<!-- Display CHOICE OPTIONS -->
+	<div ng-if="value.hasOwnProperty('choice')">
+		<h3>Choose One</h3>
+		<div class="btn-group">
+			<ANY ng-repeat="(key,item) in value.choice" ng-switch on="item.hasOwnProperty('ref')" style="float:left">
+				<button ng-switch-when=true class="btn btn-primary" ng-click="value.setIndex(key)" ng-model="radioModel2">{{item.object.name}}</button>
+				<button ng-switch-default class="btn btn-primary" ng-click="value.setIndex(key)" ng-model="radioModel2">{{item.name}}</button>
+			</ANY>
+			<button class="btn btn-primary btn-danger" ng-model="radioModel2" ng-click="value.setIndex('just a string')">Neither</button>
+		</div>
+		<!-- <pre>{{pretty(value.choice[value.choiceIndex])}}</pre> -->
+		<div ng-if="value.chosen">
+			<pre>You chose: {{value.chosen.name}}</pre>
+		</div>
+		<!-- <pre>chosen:{{value.setIndex(value.choiceIndex)}}</pre> -->
+		<!-- <pre>Angular:{{value.chosen}}</pre> -->
+		<div >
+			<!-- <pre> GOT {{value.name}} </pre> -->
+			<!-- <div ng-if="value.chosen" class="col-md-offset-1" ng-include=" 'general-form.html' " ng-init="value = value.chosen"></div> -->
+		</div>
+	</div>
+	
+	<!-- parent test -->
+	<div ng-if="value.hasOwnProperty('children')">
+		<!-- <h1>WITH CHILD</h1> -->
+		<!-- <general-form ng-repeat="value in value.children"></general-form> -->
+	</div>
+	
+	<!-- Custom elements -->
+	<div ng-switch on="value.name">
+		<!-- -->
+
+		<!-- OB File Hashes 
+		<div ng-switch-when="Hashes">
+			<hash></hash>
+		</div>-->
+		<!-- TA Motivations -->
+		<div ng-switch-when="Motivations">
+			<!-- <tooltip-label></tooltip-label> -->
+			<div class="col-md-offset-1">
+				<div class="form-group">
+					<button class="btn btn-sm" ng-click="value.addMotivation();">add Motivation</button>
+				</div>
+				<div ng-repeat="motivation in value.items" style="margin-bottom:2px;">
+					<form class="form-inline">
+						<button class="btn btn-danger btn-sm" ng-click="value.delMotivation($index)"><i class="glyphicon glyphicon-trash"></i></button>
+						<span>{{motivation.value.name}}</span>
+						<select ng-model="motivation.value.value" ng-options="item.name for item in motivation.value.vocab.list" class='btn-default btn-sm'></select>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</form>
+</script>
+
+<div ng-include="'general-form.html'" ng-init="value = value"></div>

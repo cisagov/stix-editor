@@ -1,0 +1,42 @@
+<div class="col-md-offset-1">
+	<div ng-controller="hashCtrl">
+		<button class="btn btn-sm" 
+				tabindex="10" 
+				title="add {{hash.name}}"
+				aria-label="File Object: Hash: Click to add a new hash value for this file below"
+				style="margin-bottom:10px;" 
+				ng-click="value.addHash(hash); newHash()">add {{hash.name}}</button>
+		<span id="{{hash.name}}_hashtype_tooltip" style="display: none;">{{value.tooltip}}</span>
+		<span id="{{hash.name}}_hashval_tooltip" style="display: none;">{{value.tooltip}}</span>
+	</div>
+	<div ng-repeat="hash in value.children" style="clear:both">
+		<form class="form-inline" style="margin-bottom:5px;">
+			<div class="form-group">
+				<button class="btn btn-primary btn-danger btn-sm"
+						aria-label="Delete Hash Value: Click to remove this hash value" 
+						tabindex="10" 
+						ng-click="value.delHash($index)"><i class="glyphicon glyphicon-trash"></i></button>
+				<label>Type</label>
+				<select 
+					ng-model="hash.children[0].value" 
+					tabindex="10" 
+					ng-options="item.name for item in hash.type.vocab.list"
+					ng-focus="tooltip.focusTooltip(hash.name, '_hashtype', hash.tooltip)"
+					ng-blur="tooltip.blurTooltip(hash.name, '_hashtype')"
+					aria-label="File Object: Hash: Type: Choose a hash type from the list with the up and down buttons" 
+					class='btn btn-default'></select>
+			</div>
+			<div class="form-group">
+				<label>{{hash.simple_hash_value.name}}</label>
+				<input 
+					class="input-sm" 
+					tabindex="10" 
+					type="text"
+					aria-label="File Object: Hash: Simple Hash Value text field" 
+					ng-focus="tooltip.focusTooltip(hash.name, '_hashval', hash.tooltip)"
+					ng-blur="tooltip.blurTooltip(hash.name, '_hashval')"
+					ng-model="hash.simple_hash_value.text"/>
+			</div>
+		</form>
+	</div>
+</div>

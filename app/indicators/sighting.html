@@ -1,0 +1,54 @@
+<tooltip-label></tooltip-label>
+<div class="col-md-offset-1">
+	<div ng-controller="indicatorCtrl" style="margin-bottom:5px;">
+		<span id="{{value.name}}_sighting_tooltip" style="display: none;">{{value.tooltip}}</span>
+		<button class="btn btn-sm" 
+				tabindex="10" 
+				id="{{value.name}}" 
+				name="{{value.name}}" 
+				title="add {{value.name}}"
+				aria-label="Add Sightings Button: Click to add a date when this indicator occurred, then tab to the Sighting Date Text field. If the indicator occurred on multiple dates, additional clicks will add additional dates to the listing." 
+				ng-focus="tooltip.focusTooltip(value.name, '_sighting', value.tooltip)"
+				ng-blur="tooltip.blurTooltip(value.name, '_sighting')"
+				ng-click="value.addSighting();">add {{value.name}}</button>
+		<span id="{{value.name}}_sightingText_tooltip" style="display: none;">
+			Enter a date in the format of 31-January-2000 or use the calendar button on the right to toggle the calendar date picker
+		</span>
+	</div>
+	<div ng-repeat="sighting in value.children" ng-controller="DatepickerCtrl" style="margin-bottom:2px;">
+			<form class="form-inline">
+				<div class="form-group">
+  					<div class="input-group">
+						<span class="input-group-btn">
+							<button class="btn btn-danger btn-sm" 
+									tabindex="10" 
+									title="Remove this Sighting entry" 
+									ng-click="value.delSighting($index)"><i class="glyphicon glyphicon-trash"></i></button>
+						</span>
+						<input type="text" 
+							tabindex="10" 
+							ng-model="sighting.timestamp.value"
+							ng-focus="tooltip.focusTooltip(value.name, '_sightingText', 'Custom Sightings text help message.')"
+							ng-blur="tooltip.blurTooltip(value.name, '_sightingText')" 
+							aria-label="Sighting Date Text field: This field uses a format of a date number, then a dash, then a Month name, then another dash, then a four digit year number."
+							alt-input-formats="altInputFormats" 
+							class="form-control input-sm" 
+							uib-datepicker-popup="{{format}}" 
+							is-open="popup1.opened" 
+							datepicker-options="dateOptions" 
+							ng-required="true" 
+							close-text="Close" 
+							size="30" />
+						<span class="input-group-btn">
+							<button type="button" 
+									class="btn btn-default btn-sm" 
+									tabindex="10" 
+									title="Open Calendar"
+									aria-label="Sighting Date Calendar button.  This will open a calendar pop-up that has poor support for screen reader technology.  Using Shift Plus Tab to access the Sighting Calendar Text field and typing in a date is recommended."
+									ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</div>
+				</div>
+			</form>
+	</div>
+</div>

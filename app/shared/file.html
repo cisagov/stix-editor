@@ -1,0 +1,11 @@
+<div ng-repeat="(key, value) in value.children">
+	<div ng-switch on="value.name">
+			 <!-- OB File Hashes -->
+			<div ng-switch-when="Hashes">
+				<hash></hash>
+			</div>
+			<div ng-switch-default>
+				<recursive-fill ng-init="value = value"></recursive-fill>
+			</div>
+	</div>
+</div>

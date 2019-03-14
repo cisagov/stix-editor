@@ -1,0 +1,92 @@
+<title-dir text="Observable"></title-dir>
+<div ng-repeat="value in observable.children">
+	<div ng-switch on="value.name">
+		<div ng-switch-when='Object'>
+			<span id="object_obj_tooltip" style="display: none;">{{value.tooltip}}</span>
+			<label for="Object Dropdown">
+				<a data-placement="left" data-toggle="tooltip" title="{{value.tooltip}}">{{value.name}}</a>
+				<span ng-if="value.validation.required" class="label-required">*</span>
+			</label>
+			<div ng-repeat="(key,value) in value.children" ng-switch on="value.name">
+				<div ng-switch-when="Properties" style="clear:both">
+					<select tabindex="10" 
+							id="Object Dropdown" 
+							title="{{value.name}} dropdown" 
+							title="Observable Object dropdown list"
+							aria-label="Indicator: Object Type List: Required: Press Up, Down, or the first letter of your selection to display fields for the selected type: {{value.tooltip}}"
+							required 
+							ng-options="option.name as option.name for option in data.observableOptions" 
+							ng-model='data.selectedObservable'  
+							ng-init="data.selectedObservable= value.type" 
+							ng-change='value.change(data.selectedObservable); setObject(data.selectedObservable.name);' 
+							ng-focus="tooltip.focusTooltip('object', '_obj', value.tooltip)"
+							ng-blur="tooltip.blurTooltip('object', '_obj')"
+							class='btn btn-default btn-sm'></select>
+					<div ng-repeat="value in value.children" style="margin-left: 130px;">
+						<div ng-switch on="value.name" class="animate-switch-container">
+							<div ng-switch-when="Hashes"><hash></hash></div>
+							<div ng-switch-when="Values"><value></value></div>
+							<div ng-switch-when="Attachments">
+								<accordion-related
+								value='value'
+								total-array="stix.observables.children"
+								total-array-filter="['FileObj:FileObjectType']"
+								add-modal= "openModal({self:value,add:'FileObject',template:'file'})"
+								display='displayRef(displayItem)'
+								edit-modal="openModal(editObject)"
+								del-modal="delModal(objectType,childIndex)"
+								template-modal='file'
+								></accordion-related>
+							</div>
+							<div ng-switch-when="Links">
+								<accordion-related
+								value='value'
+								total-array="stix.observables.children"
+								total-array-filter="['LinkObj:LinkObjectType']"
+								add-modal= "openModal({self:value,add:'LinkObject'})"
+								display='displayRef(displayItem)'
+								edit-modal="openModal(editObject)"
+								del-modal="delModal(objectType,childIndex)"
+								template-modal='file'
+								></accordion-related>
+							</div>
+							<div ng-switch-default><recursive-observable></recursive-observable></div>
+						</div>
+					</div>
+				</div>
+				<div ng-switch-when="Related_Objects" style="margin-top:10px">
+					<div class="">
+						<div class="accordion-group" style="clear:both">
+							<div class="accordion-heading" ng-controller="CollapseDemoCtrl" ng-click="toggle()">
+								<a class="accordion-toggle"  data-parent="#accordion2" tooltip="{{value.tooltip}}" tooltip-placement="left">
+								{{value.name}}
+								<span class="badge" style="cursor:pointer;" style="background-color: #205493">{{value.children.length}} / {{(stix.observables.children | observableObject).length}}</span>
+								<span ng-show="{{(stix.observables.children | observableObject).indexOf(observable)}} >= 0" class="badge badge-important">this {{stix.observables.childType().name}} is not listed below</span>
+								</a>
+							</div>
+							<div class="accordion-body collapse" >
+								<div class="alert alert-info">
+									<!-- {{value.cleanRef(stix.tas.children)}} -->
+									<div ng-repeat="child in stix.observables.children | observableObject">
+										<div ng-show="observable != child">
+											<label>
+												<input type="checkbox" checklist-model="value.list" checklist-value="child.object" ng-click="value.updateRef(child.object)"  > {{displayRef(child)}}
+											</label>
+											<a ui-sref="view({objectType:'observables' ,childIndex:stix.observables.children.indexOf(child)})"><pre>LINK to "{{child | titleOrIdShortener:25 }}" page</pre></a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div ng-switch-default>
+					<general-form></general-form>
+				</div>
+			</div>
+		</div>
+		<div ng-switch-default>
+			<general-form></general-form>
+		</div>
+	</div>
+</div>

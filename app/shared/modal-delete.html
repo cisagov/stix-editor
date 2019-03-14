@@ -1,0 +1,32 @@
+<!-- delete confirmation modal -->
+<div class="modal-header">
+	<h3>Do you really want to delete this object?</h3>
+	<!-- modalData:{{modalData}} -->
+</div>
+
+<div class='modal-body'>
+	<!-- <p> Is this the object you want to d </p> -->
+	<table class='table'>
+		<tr>
+			<td>type: </td>
+			<td>{{stix.element.split(':')[1]}}</td>
+		</tr><tr>
+		<tr>
+			<td>id: </td>
+			<td>{{stix.id.value}}</td>
+		</tr>
+		<tr>
+			<td>title: </td>
+			<td>{{stix.title.text}}</td>
+		</tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	
+</div>
+
+<div class='modal-footer'>
+	<button class="btn btn-primary btn-danger" ng-click="ok()">Yes, Delete it!</button>
+    <button class="btn btn-primary " ng-click="cancel()">No, maybe not.</button>
+</div>

@@ -1,0 +1,98 @@
+<title-dir text="Indicator"></title-dir>
+<div ng-repeat='value in indicator.children'>
+	<div ng-switch on="value.name" style="clear:both">
+		<!-- Leveraged_TTPs Section -->
+		<div ng-switch-when="Indicated_TTPs" style="clear: both; margin-bottom: 0px; margin-top: 20px;">
+			<accordion-related 
+				value='value'
+				total-array="stix.ttps.children"
+				total-array-filter="[]"
+				add-modal= "openModal({self:value,child:stix.ttps.childType(),stix:'ttps'})"
+				display='displayRef(displayItem)'
+				edit-modal="openModal(editObject)"
+				del-modal="value.updateRef(childIndex)"
+				del-func-name='updateRef'
+				stix='ttps'
+				template='stix'
+				></accordion-related>
+		</div>
+		<div ng-switch-when="Kill_Chain_Phases">
+			<label>
+				<a data-placement="left" data-toggle="tooltip" title="{{value.tooltip}}">{{value.name}}</a>
+				<span ng-if="value.validation.required" class="label-required">*</span>
+			</label>
+			<div ng-repeat='killChainPhase in value.children'>
+				<div ng-repeat="value in killChainPhase.attributes" ng-switch on="value.name">
+					<div ng-switch-when="name" class="col-md-offset-1"><general-form></general-form></div>
+				</div>
+			</div>
+		</div>
+		<div ng-switch-when="Handling">
+			<handling></handling>
+		</div>
+		<div ng-switch-when="Sightings" style="clear:both">
+			<sighting></sighting>
+		</div>
+		<div ng-switch-when="Suggested_COAs">
+			<accordion-related
+			value='value'
+			total-array="stix.coas.children"
+			total-array-filter="[]"
+			add-modal= "openModal({self:value,child:stix.coas.childType(),stix:'coas'})"
+			display='displayRef(displayItem)'
+			edit-modal="openModal(editObject)"
+			del-modal="value.updateRef(childIndex)"
+			del-func-name='updateRef'
+			stix='coas'
+			template='stix'></accordion-related>
+		</div>
+		<div ng-switch-default>
+			<div ng-if="value.hasOwnProperty('name')">
+				<recursive-fill></recursive-fill>
+			</div>
+			<div ng-if="value.hasOwnProperty('choice')">
+				<div ng-switch on='value.chosen.name'>
+						<div ng-switch-when='Observable'>
+							<div class="col-md-offset-1">
+								Choose ONE Observable from below
+								<select ng-model="indicator.observable.object.id.value" style="width:100%">
+									<option ng-repeat="child in stix.observables.children"  ng-value="child.id.value" ng-click="changeObservable(child)" >{{displayRef(child)}}</option>
+								</select>
+							</div>
+							<div ng-if='new === undefined'></div>
+						</div>
+						<div ng-switch-when='Composite_Indicator_Expression'>
+							<div class="col-md-offset-1">
+							<div class="panel panel-default" style="margin-bottom:10px">
+								<div class="panel-heading" ng-controller="CollapseDemoCtrl" ng-click="toggle()">
+									<a class="accordion-toggle"  data-parent="#accordion2" tooltip="{{value.tooltip}}" tooltip-placement="left">
+									{{value.chosen.name}}
+									<span class="badge" style="cursor:pointer;" style="background-color: #205493">{{value.chosen.children.length}} / {{stix.indicators.children.length}}</span>
+									<span ng-show="stix.indicators.children.indexOf(indicator) >= 0" class="badge badge-important">this {{stix.indicators.childType().name}} is not listed below</span>
+									</a>
+								</div>
+								<div class="panel-collapse collapse" >
+									<div class="alert alert-warning">
+										{{value.chosen.cleanRef(stix.indicators.children)}}
+										<div ng-repeat="(index,child) in stix.indicators.children">
+											<div ng-show="indicator != child">
+												<label>
+													<input type="checkbox" checklist-model="value.chosen.list" checklist-value="child" ng-click="value.chosen.updateRef(child)" > {{displayRef(child)}}
+												</label>
+											<a  ui-sref="view({objectType:'indicators' ,childIndex:index})"><pre>LINK to "{{child | titleOrIdShortener:25 }}" page</pre></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<div ng-if="value.hasOwnProperty('object')">
+				<tooltip-label></tooltip-label>
+				<observable ng-controller="observableCtrl" ng-init="observable = value.object"><observable>
+			</div>
+		</div>
+	</div>
+</div>

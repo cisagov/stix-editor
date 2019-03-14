@@ -1,0 +1,194 @@
+<div ng-init="complete = {fields:[],state:true}">
+<form name="page">
+	
+	<title-dir text="{{stix.header.name}}"></title-dir>
+	
+	<div ng-repeat="(key,value) in stix.header.children" ng-switch on="value.name">
+	
+		<div ng-switch-when="Handling">
+			<handling></handling>
+		</div>
+		
+		<div ng-switch-default style="padding-bottom: 10px;">
+			<script type="text/ng-template" id="stixheader.html" style="clear:both">
+			<form name="genForm" ng-controller="validationCtrl">
+				<tooltip-label></tooltip-label>
+				<div ng-if="value.hasOwnProperty('vocab')" ng-switch on="value.vocab.multiple">
+
+					<!-- Field: STIX_HEADER Package_Intent -->
+					<div ng-switch-when=true>
+						<span id="{{value.name}}_stixhead_tooltip" style="display: none;">
+							{{value.tooltip}}<br/>
+							Press Shift+F8, then Up/Down and Spacebar to select more than one {{value.name}}
+						</span>
+						<div>
+							<span id="{{value.name}}_Multi" style="display:none">
+								{{value.parent}}: {{value.name}} 
+								list: Press Shift Plus F Eight, then Up Down and 
+								Spacebar to select more than one {{value.name}}:
+								{{value.tooltip}} 
+							</span>
+							<select 
+								tabindex="10" 
+								id="{{value.name}}" 
+								aria-describedby="{{value.name}}_Multi"
+								class="btn-default btn-sm" 
+								size="{{value.vocab.list.length}}" 
+								ng-model="value.items" 
+								ng-options="item.name for item in value.vocab.list" 
+								ng-focus="tooltip.focusTooltip(value.name, '_stixhead', value.tooltip)" 
+								ng-blur="tooltip.blurTooltip(value.name, '_stixhead')"
+								multiple 
+								ng-required="value.validation.required">
+							</select>
+						</div>
+					</div>
+					<!-- Field: STIX_HEADER Package_Intent END -->
+
+					<!-- 
+						Field: STIX_HEADER Handling Country
+						Field: STIX_HEADER Handling Adminstrative Area
+						Field: STIX_HEADER Handling Industry Sector
+					-->
+					<div ng-switch-default>
+						
+						<span ng-if="value.hasOwnProperty('name_for_ui')">
+							<span id="{{value.name_for_ui}}_stixhead_tooltip" style="display: none;">{{value.tooltip}}</span>
+							<span id="{{value.name_for_ui}}_List" style="display:none">
+								{{value.parent}}: {{value.name_for_ui}}: {{value.tooltip}} 
+							</span>
+							<select 
+								id="{{value.name_for_ui}}" 
+								aria-labelledby="{{value.name_for_ui}}_List" 
+								class="btn-default btn-sm" 
+								ng-model="value.value" 
+								ng-focus="tooltip.focusTooltip(value.name_for_ui, '_stixhead', value.tooltip)" 
+								ng-blur="tooltip.blurTooltip(value.name_for_ui, '_stixhead')"
+								ng-options="item.name for item in value.vocab.list">
+							</select>
+						</span>
+						<span ng-if="!value.hasOwnProperty('name_for_ui')">
+							<span id="{{value.name}}_stixhead_tooltip" style="display: none;">{{value.tooltip}}</span>
+							<span id="{{value.name}}_List" style="display:none">
+								{{value.parent}}: {{value.name}}: {{value.tooltip}} 
+							</span>
+							<select 
+								id="{{value.name}}" 
+								aria-labelledby="{{value.name}}_List" 
+								class="btn-default btn-sm" 
+								ng-model="value.value" 
+								ng-focus="tooltip.focusTooltip(value.name, '_stixhead', value.tooltip)" 
+								ng-blur="tooltip.blurTooltip(value.name, '_stixhead')"
+								ng-options="item.name for item in value.vocab.list">
+							</select>
+						</span>
+					</div>
+					<!-- Field: Multiple Dropdown List Fields END -->
+
+				</div>
+				
+				<!-- 
+					Field: STIX_HEADER Title
+					Field: STIX_HEADER Description
+				-->
+				<div ng-if="value.hasOwnProperty('text') || (value.hasOwnProperty('value') && !value.hasOwnProperty('vocab'))" ng-switch on="value.date">					
+					<div ng-switch-default>
+						<div ng-if="value.hasOwnProperty('text')">
+							<div>
+								<div ng-switch on=value.hasOwnProperty('pattern')>
+									<div ng-switch on="value.name">
+										<span id="{{value.name}}_stixhead_tooltip" style="display: none;">{{value.tooltip}}</span>
+
+										<!-- Field: STIX_HEADER Title -->
+										<div ng-switch-when="Title">
+											<textarea 
+												tabindex="10" 
+												id="{{value.name}}" 
+												aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}" 
+												class="form-control" 
+												name="textarea" 
+												rows="1" 
+												ng-model="value.text" 
+												style="width:100%" 
+												ng-required="value.validation.required" 
+												ng-focus="tooltip.focusTooltip(value.name, '_stixhead', value.tooltip)" 
+												ng-blur="tooltip.blurTooltip(value.name, '_stixhead')"
+												ng-class="{validation:value.hasOwnProperty('validation')}">
+											</textarea>
+										</div>
+										<!-- Field: STIX_HEADER Title END -->
+
+										<!-- Field: STIX_HEADER Description -->
+										<div ng-switch-when="Description">
+											<textarea 
+												tabindex="10" 
+												id="{{value.name}}" 
+												aria-label="{{value.parent}}: {{value.name}}: {{value.tooltip}}" 
+												class="form-control" 
+												name="textarea" 
+												rows="1" 
+												ng-model="value.text" 
+												style="width:100%" 
+												ng-required="value.validation.required" 
+												ng-focus="tooltip.focusTooltip(value.name, '_stixhead', value.tooltip)" 
+												ng-blur="tooltip.blurTooltip(value.name, '_stixhead')"
+												ng-class="{validation:value.hasOwnProperty('validation')}">
+											</textarea>
+										</div>
+										<!-- Field: STIX_HEADER Description END -->
+
+									</div>
+								</div>
+							</div>
+							
+							<button ng-if="value.hasOwnProperty('add')" ng-click="add(value.text)">add+</button>
+							<ul class="unstyled">
+								<li ng-repeat="item in value.items">{{item}}</li>
+							</ul>
+						</div>
+
+						<div ng-if="value.hasOwnProperty('value')">
+							<span ng-if="value.hasOwnProperty('pattern')">{{value.validationtip.toString()}}</span>
+							<textarea class="form-control" name="textarea" rows="1" ng-model="value.value" style="width:100%" ng-readonly="value.disabled || value.attributes[0].name == 'xsi:type' || value.name == 'xsi:type'"></textarea>
+							<button ng-if="value.hasOwnProperty('add')" ng-click="add(value.text)">add+</button>
+							<ul class="unstyled">
+								<li ng-repeat="item in value.items">{{item}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- Field: Multiple Plain Text Fields END -->
+
+				<!-- Field: STIX_HEADER Handling Submitter Company Name -->
+				<div ng-if="value.hasOwnProperty('placeholder')">
+					<form class="form-inline">
+						<span id="{{value.name}}_stixhandling_tooltip" style="display: none;">{{value.tooltip}}</span>
+						<input 
+							type="text" 
+							id="{{value.name}}" 
+							aria-label="{{value.parent}}: {{value.name}}: Text field with add button to support multiple entries: {{value.tooltip}}" 
+							class="input-sm" 
+							ng-focus="tooltip.focusTooltip(value.name, '_stixhandling', value.tooltip)" 
+							ng-blur="tooltip.blurTooltip(value.name, '_stixhandling')"
+							ng-model="value.placeholder"/>
+						<button type="button" aria-labelledby="add {{value.name}}" class="btn btn-sm" ng-click="value.add()">add {{value.name}}</button>
+						<button ng-controller="bulkCtrl" type="button" aria-labelledby="add multiple" class="btn btn-sm" ng-click="bulkEntry();">add multiple</button>
+					</form>
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="item in value.items">
+							<form class="form-inline">
+								<button class="btn btn-primary btn-danger btn-sm" aria-label="Remove Submitter Company Name" ng-click="value.del($index)"><i class="glyphicon glyphicon-trash"></i></button>
+								<input type="text" class="input-sm" aria-label="Submitter Company Name" ng-model="item.name"/>
+							</form>
+						</li>
+					</ul>
+				</div>
+				<!-- Field: STIX_HEADER Handling Submitter Company Name END -->
+
+			</form>
+			</script>
+			<div ng-include="'stixheader.html'" ng-init="value = value"></div>
+		</div>
+	</div>
+</form>
+</div>

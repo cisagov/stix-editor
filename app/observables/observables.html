@@ -1,0 +1,6 @@
+<div ng-controller="observableCtrl">
+	<form name="guiForm">
+		<observable></observable>
+		<button class="btn" tabindex="10" ng-disabled="guiForm.$invalid" ng-click="addObject(observable); delObservable();" style="border-top-width: 1px; padding-top: 4px; margin-top: 10px;">Add {{observable.name}} Object</button>
+	</form>
+</div>

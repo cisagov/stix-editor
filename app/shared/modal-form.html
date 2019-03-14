@@ -1,0 +1,26 @@
+<div ng-if="view.value.name.length > 0" class="modal-header">
+	<h3>{{view.modalParam}} {{view.value.name}} modal</h3>
+</div>
+
+<div class='modal-body'>
+	<div ng-switch on="view.argument.hasOwnProperty('template')">
+		<div ng-switch-when="true">
+			<dynamic-template template="view.argument.template" value="view.value"></dynamic-template>
+		</div>
+		<div ng-switch-default>
+			<div ng-repeat="(key, item) in view.value.children">
+				<general-form ng-init="value = item"></general-form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class='modal-footer' ng-hide="view.argument.edit">
+	<button class="btn btn-primary" tabindex="10" title="Add new item" ng-click="ok()">Add new item</button>
+	<button class="btn" tabindex="10" title="Cancel" ng-click="cancel()">Cancel</button>
+</div>
+
+<div class='modal-footer' ng-show="view.argument.edit">
+	<button class="btn btn-primary btn-danger" tabindex="10" title="Delete" ng-click="cancel(); view.delModal('observables',view.childIndex,{parent:view.argument.parent,delFuncName:view.argument.delFunc,cancel:view.argument,stix:view.argument.stix})">Delete</button>
+	<button class="btn" tabindex="10" title="Close" ng-click="cancel()">Close</button>
+</div>

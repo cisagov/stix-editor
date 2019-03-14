@@ -1,0 +1,13 @@
+<!-- Course_Of_Actions Template -->
+<div ng-controller="coaCtrl">
+	<coa></coa>
+	<button 
+		tabindex="10" 
+		title="Add {{coa.name}} Object" 
+		aria-label="Add {{coa.name}} Object: click to add this {{coa.name}} into the current STIX Package."
+		class="btn btn-primary" 
+		ng-click="addObject(coa); delCOA();" 
+		style="border-top-width: 1px; padding-top: 4px; margin-top: 10px;">
+		Add {{coa.name}} Object
+	</button>
+</div>

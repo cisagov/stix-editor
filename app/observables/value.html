@@ -1,0 +1,40 @@
+<div>
+	<button class="btn btn-sm" 
+			tabindex="10" 
+			id="add Value"
+			aria-label="Windows Registry Key Object: Value: Click to add new name and data value for this registry key" 
+			ng-click="value.addValue();" 
+			style="margin:10px 0px 10px 0px;">add Value</button>
+	<span id="value_name_tooltip" style="display: none;">{{value.tooltip}}</span>
+	<span id="value_data_tooltip" style="display: none;">{{value.tooltip}}</span>
+</div>
+<form class="form-inline">
+	<div ng-repeat="winRegKeyObjValue in value.children" style="margin-bottom:5px;">
+		<button class="btn btn-primary btn-danger btn-sm"
+				aria-label="Delete Windows Registry Key Object Value: Click to remove this value name and data" 
+				tabindex="10" 
+				ng-click="value.delValue($index)"><i class="glyphicon glyphicon-trash"></i></button>
+		<div class="form-group">
+			<label>{{winRegKeyObjValue.children[0].name}}</label>
+			<input 
+				type='text' 
+				class="input-sm" 
+				tabindex="10"
+				aria-label="Windows Registry Key Object: Value: Name"  
+				ng-focus="tooltip.focusTooltip('value', '_name', value.tooltip)"
+				ng-blur="tooltip.blurTooltip('value', '_name')"
+				ng-model="winRegKeyObjValue.children[0].text" />
+		</div>
+		<div class="form-group">
+			<label>{{winRegKeyObjValue.children[1].name}}</label>
+			<input 
+				type='text' 
+				class="input-sm" 
+				tabindex="10"
+				aria-label="Windows Registry Key Object: Value: Data" 
+				ng-focus="tooltip.focusTooltip('value', '_data', value.tooltip)"
+				ng-blur="tooltip.blurTooltip('value', '_data')"
+				ng-model="winRegKeyObjValue.children[1].text" />
+		</div>
+	</div>
+</form>

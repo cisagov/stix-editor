@@ -1,5 +1,4 @@
-<div class="panel panel-default" style="clear:both">
-
+<div class="shadow-sm p-2 mb-5 bg-light rounded" style="clear:both">
 	<span id="{{value.name}}_accordionSimple_tooltip" style="display: none;">
 		{{value.tooltip}}<br/>
 		When there are One or more {{value.name}} press Spacebar or Enter to toggle the display open and closed.
@@ -27,7 +26,7 @@
 			<span>{{value.name}}</span>
 			<span class="badge" style="background-color: #205493">{{value.children.length}}</span>
 			<button tabindex="10" 
-					class="btn btn-primary pull-right" 
+					class="btn btn-primary float-right" 
 					title="New {{value.name}}" 
 					ng-focus="tooltip.focusTooltip(value.name, '_accordionSimpleNew', value.tooltip + ' press Shift+Enter to open the create a new ' + value.name)" 
 					ng-blur="tooltip.blurTooltip(value.name, '_accordionSimpleNew')"  
@@ -57,4 +56,5 @@
 			<span style="font-size:12px;">Title:{{child.title.text.length > 0 ? child.title.text : "No Title"}}</span>
 		</div>
 	</div>
+   </div>
 </div>

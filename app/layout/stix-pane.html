@@ -8,15 +8,15 @@
 	
 	<!-- This is the button which provides the capability to toggle dynamic tooltips 
 		 for keyboard-only individuals who have mobility access needs -->
-	<button class="panel panel-default" 
+	<button class="card" 
 			href="#" 
 			tabindex="2" 
 			ng-click="tooltip.toggleTooltips()" 
 			style="width:100%" >Dynamic Tooltips are {{tooltip.getTooltips()}}</button>
 
 	<div ng-repeat="field in order" class="panel" >
-    <div class="panel panel-default">	
-		<div class="panel-heading" 
+    <div class="card">	
+		<div class="card-header"
 			style="padding:0px;" 
 			ng-switch on="$index" 
 			data-toggle="collapse" 
@@ -35,7 +35,7 @@
 			</button>
 			
 			<!-- Show buttons Course_Of_Action, Exploit_Targets, TTPs, Indicators -->
-			<button ng-switch-default class="btn btn-lg btn-block" 
+			<button ng-switch-default class="btn btn-lg btn-block ng-binding ng-scope" 
 					style="background-color: #f5f5f5;font-size: 14px;color: #205493;display:flex;" 
 					aria-label="{{field.arialabel}}: current count {{field.children.length}}: when the {{field.name}} menu options are toggled open you will tab from here to an Add {{field.name}}" 
 					ng-focus="tooltip.focusTooltip(field.name, '_leftmenu', field.tooltip)" 
@@ -43,7 +43,7 @@
 					tabindex="{{$index + 4}}" title="{{field.tooltip}}" data-parent="#accordion2" 
 					data-toggle="collapse" data-toggle="tooltip" data-placement="right" style="cursor: pointer;">
 				{{field.name}}
-				<span class="badge pull-right" style="background-color: #205493;margin-left:auto; margin-right:0;">
+				<span class="badge badge-pill badge-primary" style="background-color: #205493;margin-left:auto; margin-right:0;">
 					<span>{{field.children.length}}</span>
 				</span>
 			</button>
@@ -96,8 +96,8 @@
 	</div>
 	
 	<!-- JavaScript UPLOAD CODE STARTS HERE -->
-	<div class="panel panel-default">
-		<div flow-init class="ng-scope">
+	<div class="card">
+			<div flow-init class="ng-scope">
 			<p style="text-align: center; margin-top: 9px">Upload File</p>
 			<span id="uploadwindow_tooltip" style="display: none;">
 				Browse for a valid STIX file button: click to open a 

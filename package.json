@@ -7,7 +7,8 @@
     "license": "MIT",
     "devDependencies": {
         "bower": "^1.7.7",
-        "http-server": "^0.9.0",
+        "express": "4.16.4",
+        "helmet": "3.16.0",
         "jasmine-core": "^2.4.1",
         "karma": "^0.13.22",
         "karma-chrome-launcher": "^0.2.3",
@@ -21,7 +22,7 @@
         "update-deps": "npm update",
         "postupdate-deps": "bower update",
         "prestart": "npm install",
-        "start": "http-server -a localhost -p 8000 -c-1 ./app",
+        "start": "node app.js",
         "pretest": "npm install",
         "test": "karma start karma.conf.js",
         "test-single-run": "karma start karma.conf.js --single-run",
@@ -30,5 +31,8 @@
         "preprotractor": "npm run update-webdriver",
         "protractor": "protractor e2e-tests/protractor.conf.js",
         "update-index-async": "node -e \"var fs=require('fs'),indexFile='app/index-async.html',loaderFile='app/bower_components/angular-loader/angular-loader.min.js',loaderText=fs.readFileSync(loaderFile,'utf-8').split(/sourceMappingURL=angular-loader.min.js.map/).join('sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map'),indexText=fs.readFileSync(indexFile,'utf-8').split(/\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/).join('//@@NG_LOADER_START@@\\n'+loaderText+'    //@@NG_LOADER_END@@');fs.writeFileSync(indexFile,indexText);\""
+    },
+    "dependencies": {
+        "helmet": "^3.16.0"
     }
 }

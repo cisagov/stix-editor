@@ -7,6 +7,12 @@ body {
   padding-top: 50px;
 }
 
+/* button primary color */
+.btn-primary, .btn-primary:hover {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+}
 
 /*
  * Global add-ons

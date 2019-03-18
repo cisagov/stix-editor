@@ -14,8 +14,8 @@
 			ng-click="tooltip.toggleTooltips()" 
 			style="width:100%" >Dynamic Tooltips are {{tooltip.getTooltips()}}</button>
 
-	<div ng-repeat="field in order" class="panel" >
-    <div class="card">	
+	<div ng-repeat="field in order" class="mt-1" >
+    <div class="card border-white  border-1">	
 		<div class="card-header"
 			style="padding:0px;" 
 			ng-switch on="$index" 
@@ -75,7 +75,8 @@
 		</div>
 		</div>
 	</div>
-	<div class="panel-heading text-center">
+	<div class="card bg-transparent border-0">
+		<div class="card-body text-center">
 		<button class="btn btn-primary" 
 				tabindex="9" 
 				style="cursor:pointer;" 
@@ -87,13 +88,14 @@
 				aria-label="Export to File button: clicking this will open a window to create an XML file that represents the Structured Threat Information Expression Package that is represented on this page including: STIX Header: plus items under each the four component sections which include: Courses of Action: Exploit Targets: Tools Techniques and Procedures: Indicators"
 				data-placement="right" 
 				ng-click="export()">EXPORT to File</button>
+		</div>
 		<span id="exportbutton_tooltip" style="display: none;">
 			Export to File button: open a window where you can 
 			save the data entered into the STIX Editor to your 
 			local computer as a valid STIX file with an XML 
 			file-type extension.
 		</span>
-	</div>
+		</div>
 	
 	<!-- JavaScript UPLOAD CODE STARTS HERE -->
 	<div class="card">

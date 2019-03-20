@@ -3,7 +3,7 @@
 	<div ng-switch on="value.name">
 		<div ng-switch-when="Behavior" style="clear:both">
 			<tooltip-label></tooltip-label>
-			<div ng-repeat="value in value.children" class="col-md-offset-1 clear">
+			<div ng-repeat="value in value.children" class="offset-md-1 clear">
 				<!-- <tooltip-label></tooltip-label> -->
 				<div ng-switch on="value.name" style="clear:both">
 					<div ng-switch-when="Attack_Patterns" style="clear:both">

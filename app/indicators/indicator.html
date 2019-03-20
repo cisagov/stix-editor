@@ -23,7 +23,7 @@
 			</label>
 			<div ng-repeat='killChainPhase in value.children'>
 				<div ng-repeat="value in killChainPhase.attributes" ng-switch on="value.name">
-					<div ng-switch-when="name" class="col-md-offset-1"><general-form></general-form></div>
+					<div ng-switch-when="name" class="offset-md-1"><general-form></general-form></div>
 				</div>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 			<div ng-if="value.hasOwnProperty('choice')">
 				<div ng-switch on='value.chosen.name'>
 						<div ng-switch-when='Observable'>
-							<div class="col-md-offset-1">
+							<div class="offset-md-1">
 								Choose ONE Observable from below
 								<select ng-model="indicator.observable.object.id.value" style="width:100%">
 									<option ng-repeat="child in stix.observables.children"  ng-value="child.id.value" ng-click="changeObservable(child)" >{{displayRef(child)}}</option>
@@ -62,7 +62,7 @@
 							<div ng-if='new === undefined'></div>
 						</div>
 						<div ng-switch-when='Composite_Indicator_Expression'>
-							<div class="col-md-offset-1">
+							<div class="offset-md-1">
 							<div class="panel panel-default" style="margin-bottom:10px">
 								<div class="panel-heading" ng-controller="CollapseDemoCtrl" ng-click="toggle()">
 									<a class="accordion-toggle"  data-parent="#accordion2" tooltip="{{value.tooltip}}" tooltip-placement="left">

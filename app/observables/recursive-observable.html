@@ -178,7 +178,7 @@
 	
 		<div ng-switch on="value.name">
 			<div ng-switch-when="Motivations">
-				<div class="col-md-offset-1">
+				<div class="offset-md-1">
 					<button class="btn" tabindex="10" ng-click="value.addMotivation();">add Motivation</button>
 					<div ng-repeat="motivation in value.items" style="border-bottom-width: 10px; clear:both;">
 						<div class="btn-toolbar">
@@ -198,7 +198,7 @@
 	<div ng-repeat="value in value.children">
 		<!-- Field: This section enables recursive parent/child fields to be displayed -->
 		<div ng-if="true">
-			<div class="col-md-offset-1" ng-include=" 'recursive-observable.html' " ng-init="value = value">
+			<div class="offset-md-1" ng-include=" 'recursive-observable.html' " ng-init="value = value">
 			</div>
 		</div>
 	</div>

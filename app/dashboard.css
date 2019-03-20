@@ -8,7 +8,7 @@ body {
 }
 
 /* button primary color */
-.btn-primary, .btn-primary:hover {
+.btn-primary, .btn-primary:hover, .btn-primary:disabled {
   color: #fff;
   background-color: #286090;
   border-color: #204d74;

@@ -254,7 +254,7 @@
 				<div class="btn-toolbar">
 					<div class="btn-group">
 					<div class="input-group">
-						<button class="btn btn-primary btn-danger" ng-click="value.children[0].del($index)"><i class="glyphicon glyphicon-trash"></i></button>
+						<button class="btn btn-primary btn-danger" ng-click="value.children[0].del($index)"><i class="fas fa-trash"></i></button>
 						<input type="text" ng-model="item.name"/>
 					</div>
 					</div>
@@ -274,7 +274,7 @@
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="item in value.items">
 				<form class="form-inline">
-					<button class="btn btn-primary btn-danger btn-sm" ng-click="value.del($index)"><i class="glyphicon glyphicon-trash"></i></button>
+					<button class="btn btn-primary btn-danger btn-sm" ng-click="value.del($index)"><i class="fas fa-trash"></i></button>
 					<input type="text" class="input-sm" ng-model="item.name"/>
 				</form>
 			</li>
@@ -326,7 +326,7 @@
 				</div>
 				<div ng-repeat="motivation in value.items" style="margin-bottom:2px;">
 					<form class="form-inline">
-						<button class="btn btn-danger btn-sm" ng-click="value.delMotivation($index)"><i class="glyphicon glyphicon-trash"></i></button>
+						<button class="btn btn-danger btn-sm" ng-click="value.delMotivation($index)"><i class="fas fa-trash"></i></button>
 						<span>{{motivation.value.name}}</span>
 						<select ng-model="motivation.value.value" ng-options="item.name for item in motivation.value.vocab.list" class='btn-default btn-sm'></select>
 					</form>

@@ -15,8 +15,8 @@ var  path = require("path"); // used for working with url paths
     "js":"text/javascript",
     "json":"application/json",
     "png":"image/png",
-    "map":"application/json"
-
+    "map":"application/json",
+    "woff2": "application/font-woff2"
   };
 
   options = {

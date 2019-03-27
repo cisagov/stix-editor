@@ -15,9 +15,18 @@
         "karma-junit-reporter": "^0.4.1",
         "protractor": "^4.0.9"
     },
+    "dependencies": {
+        "angular": "1.6.9",
+        "angular-route": "1.6.4",
+        "angular-loader": "1.6.4",
+        "angular-mocks": "1.6.4",
+        "angular-animate": "1.6.4",
+        "angular-aria": "1.6.4",
+        "angular-sanitize": "1.6.4",
+        "html5-boilerplate": "^5.3.0"
+    },
     "scripts": {
-        "postinstall": "bower install",
-        "postupdate-deps": "bower update",
+        "prestart": "npm install --only=prod;mv node_modules app",
         "start": "node app.js",
         "pretest": "npm install",
         "test": "karma start karma.conf.js",

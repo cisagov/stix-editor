@@ -1,4 +1,4 @@
-<div class="col-md-offset-1">
+<div class="offset-md-1">
 	<div ng-controller="handlingCtrl" style="padding-bottom: 1em;">
 		<label for="{{value.name}}">
 			<a data-placement="left" data-toggle="tooltip">{{value.name}}</a>
@@ -13,7 +13,7 @@
 			<a tabindex="20" 
 				id="{{value.name}}" 
 				title="{{value.tooltip}}" 
-				class="btn btn-default btn-sm" 
+				class="btn btn-light btn-default btn-sm" 
 				data-toggle="dropdown"
 				aria-label="{{value.parent}}: {{value.name}}: Press Spacebar, then Tab or Shift Plus Tab and Spacebar to add a new handling marking: wait for the screen reader prompt for the handling fields to load before proceeding: {{value.tooltip}}">
 				Add Handling Marking
@@ -34,7 +34,7 @@
 					<button id="removeTLPMarking" 
 							class="btn btn-primary btn-danger btn-sm" 
 							aria-label="Delete Handling Marking"
-							ng-click="reseTLPError();value.delmarking($index);"><i class="glyphicon glyphicon-trash"></i></button>
+							ng-click="reseTLPError();value.delmarking($index);"><i class="fas fa-trash"></i></button>
 				</td>
 				<td>
 					<div ng-switch-when="AIS:AISMarkingStructure">

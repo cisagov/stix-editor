@@ -7,7 +7,6 @@
     "license": "MIT",
     "devDependencies": {
         "bower": "^1.7.7",
-        "http-server": "^0.9.0",
         "jasmine-core": "^2.4.1",
         "karma": "^0.13.22",
         "karma-chrome-launcher": "^0.2.3",
@@ -18,10 +17,8 @@
     },
     "scripts": {
         "postinstall": "bower install",
-        "update-deps": "npm update",
         "postupdate-deps": "bower update",
-        "prestart": "npm install",
-        "start": "http-server -a localhost -p 8000 -c-1 ./app",
+        "start": "node app.js",
         "pretest": "npm install",
         "test": "karma start karma.conf.js",
         "test-single-run": "karma start karma.conf.js --single-run",

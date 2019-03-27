@@ -153,7 +153,7 @@
 			</form>
 			<div ng-repeat="item in value.items" style="margin-bottom:5px;margin-top:5px;">
 				<form class="form-inline">
-					<button class="btn btn-primary btn-danger btn-sm" tabindex="10" title="add {{value.name}}" ng-click="value.del($index)"><i class="glyphicon glyphicon-trash"></i></button>
+					<button class="btn btn-primary btn-danger btn-sm" tabindex="10" title="add {{value.name}}" ng-click="value.del($index)"><i class="fas fa-trash"></i></button>
 					<input type="text" class="form-control input-sm" tabindex="10" ng-model="item.name"/>
 				</form>
 			</div>
@@ -178,13 +178,13 @@
 	
 		<div ng-switch on="value.name">
 			<div ng-switch-when="Motivations">
-				<div class="col-md-offset-1">
+				<div class="offset-md-1">
 					<button class="btn" tabindex="10" ng-click="value.addMotivation();">add Motivation</button>
 					<div ng-repeat="motivation in value.items" style="border-bottom-width: 10px; clear:both;">
 						<div class="btn-toolbar">
 							<div class="btn-group">
 								<div class="input-group">
-									<button class="btn btn-primary btn-danger" tabindex="10" ng-click="value.delMotivation($index)"><i class="glyphicon glyphicon-trash"></i></button>
+									<button class="btn btn-primary btn-danger" tabindex="10" ng-click="value.delMotivation($index)"><i class="fas fa-trash"></i></button>
 									<span class="input-group-addon">{{motivation.value.name}}</span>
 									<select ng-model="motivation.value.value" tabindex="10" ng-options="item.name for item in motivation.value.vocab.list"></select>
 								</div>
@@ -198,7 +198,7 @@
 	<div ng-repeat="value in value.children">
 		<!-- Field: This section enables recursive parent/child fields to be displayed -->
 		<div ng-if="true">
-			<div class="col-md-offset-1" ng-include=" 'recursive-observable.html' " ng-init="value = value">
+			<div class="offset-md-1" ng-include=" 'recursive-observable.html' " ng-init="value = value">
 			</div>
 		</div>
 	</div>

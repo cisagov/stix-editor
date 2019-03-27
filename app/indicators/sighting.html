@@ -1,8 +1,8 @@
 <tooltip-label></tooltip-label>
-<div class="col-md-offset-1">
+<div class="offset-md-1">
 	<div ng-controller="indicatorCtrl" style="margin-bottom:5px;">
 		<span id="{{value.name}}_sighting_tooltip" style="display: none;">{{value.tooltip}}</span>
-		<button class="btn btn-sm" 
+		<button class="btn btn-light btn-sm" 
 				tabindex="10" 
 				id="{{value.name}}" 
 				name="{{value.name}}" 
@@ -23,7 +23,7 @@
 							<button class="btn btn-danger btn-sm" 
 									tabindex="10" 
 									title="Remove this Sighting entry" 
-									ng-click="value.delSighting($index)"><i class="glyphicon glyphicon-trash"></i></button>
+									ng-click="value.delSighting($index)"><i class="fas fa-trash"></i></button>
 						</span>
 						<input type="text" 
 							tabindex="10" 
@@ -45,7 +45,7 @@
 									tabindex="10" 
 									title="Open Calendar"
 									aria-label="Sighting Date Calendar button.  This will open a calendar pop-up that has poor support for screen reader technology.  Using Shift Plus Tab to access the Sighting Calendar Text field and typing in a date is recommended."
-									ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+									ng-click="open1()"><i class="fas fa-calendar-alt"></i></button>
 						</span>
 					</div>
 				</div>

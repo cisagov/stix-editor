@@ -16,7 +16,7 @@
         "protractor": "^4.0.9"
     },
     "dependencies": {
-        "angular": "1.6.9",
+        "angular": "1.8.0",
         "angular-route": "1.6.4",
         "angular-loader": "1.6.4",
         "angular-mocks": "1.6.4",
